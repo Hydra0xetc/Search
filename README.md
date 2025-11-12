@@ -11,7 +11,7 @@ chmod +x install.sh
 ```
 
 ## example
-![Example](./gif/example.gif)
+![Example](./gif/example.mp4)
 
 > [!IMPORTANT]
 > This script also can be use in other distribution 
