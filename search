@@ -59,7 +59,7 @@ main() {
                 ;;
             "q")
                 echo
-                echo "Exiting..."
+                echo "${BOLD}${CYAN}Exiting...${RESET}"
                 cleanup
                 ;;
             *)
