@@ -1,16 +1,16 @@
-## search or uninstall a package
+# search or uninstall a package
 I couldn't think of a good name so I named it search and uninstall
 
-# prerequest
+## prerequest
 make sure you have `fzf` installed on your system
 
-# installation
+## installation
 ```bash
 chmod +x install.sh
 ./install.sh
 ```
 
-# example
+## example
 ![Example](./gif/example.gif)
 
 > [!IMPORTANT]
@@ -18,5 +18,5 @@ chmod +x install.sh
 > which uses the apt package like ubuntu or debian 
 > but add sudo before apt install to use this script
 
-# inspired by 
+## inspired by 
 [Kris Occhipinti](https://youtu.be/raaQt1KepVY?si=iTWk_sjRYvZ1Hs1X) 
