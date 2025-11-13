@@ -9,4 +9,5 @@ echo "installed script to $install_path"
 
 echo "now add path for your system"
 echo "example in bash: "
-echo "echo 'export PATH=\$HOME/.local/bin/:PATH' >> ~/.bashrc"
+echo "echo \"export PATH='\$PATH:\$HOME/.local/bin/' >> ~/.bashrc\""
+
