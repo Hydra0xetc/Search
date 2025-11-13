@@ -51,7 +51,7 @@ main() {
             case "${uninstall}" in
                 "" | "y" | "Y")
                     echo
-                    if apt remove -y "$package" && apt autoremove -y; then
+                    if apt remove -y $package && apt autoremove -y; then
                         echo
                         echo "${BOLD}${GREEN}Uninstallation complete!${RESET}"
                     else

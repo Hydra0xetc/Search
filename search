@@ -49,7 +49,7 @@ main() {
             case "${install}" in
                 "" | "y" | "Y")
                     echo
-                    if apt install -y "$package"; then
+                    if apt install -y $package; then
                         echo
                         echo "${BOLD}${GREEN}Installation complete!${RESET}"
                     else
