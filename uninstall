@@ -42,34 +42,38 @@ main() {
         echo "Selected package(s): $package"
         echo
         
+        while true; do
+
         # Confirmation with timeout
-        read -t 30 -n1 -p "Uninstall this package(s)? [Y/n/q]: " uninstall
-        echo  # Add newline after read
-        
-        case "${uninstall}" in
-            "y" | "")
-                if apt remove -y $package && apt autoremove -y; then
+            read -t 30 -n1 -p "Uninstall this package(s)? [Y/n/q]: " -r uninstall
+            echo  # Add newline after read
+            
+            case "${uninstall}" in
+                "" | "y" | "Y")
                     echo
-                    echo "${BOLD}${GREEN}Uninstallation complete!${RESET}"
-                else
+                    if apt remove -y "$package" && apt autoremove -y; then
+                        echo
+                        echo "${BOLD}${GREEN}Uninstallation complete!${RESET}"
+                    else
+                        echo "${BOLD}${RED}Uninstallation failed!${RESET}"
+                    fi
+                    break
+                    ;;
+                "n" | "N")
                     echo
-                    echo "${BOLD}${RED}Uninstallation failed!${RESET}"
-                fi
-                ;;
-            "n")
-                echo
-                echo "${BOLD}${RED}Uninstallation canceled.${RESET}"
-                ;;
-            "q")
-                echo
-                echo "${BOLD}${CYAN}Exiting...${RESET}"
-                cleanup
-                ;;
-            *)
-                echo
-                echo "${BOLD}${RED}Invalid choice. Uninstallation canceled.${RESET}"
-                ;;
-        esac
+                    # Back to package selection 
+                    main
+                    break
+                    ;;
+                "q" | "Q")
+                    echo "${BOLD}${CYAN}Exiting...${RESET}"
+                    cleanup
+                    ;;
+                *)
+                    echo "${BOLD}${RED}Invalid choice. Press Y(es), n(o), or q(uit)${RESET}"
+                    ;;
+            esac
+        done
     else
         echo "${BOLD}${CYAN}No Package Selected${RESET}"
     fi

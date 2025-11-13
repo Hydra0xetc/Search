@@ -20,7 +20,7 @@ main() {
     package="$(
         apt-cache pkgnames 2>/dev/null | \
             fzf -m \
-            --prompt="${BOLD}${GREEN}Select A Package: ${RESET}" \
+            --prompt="${BOLD}${GREEN}Select A Package(s): ${RESET}" \
             --header="↑↓: Navigation | Tab: Select multiple package | Enter: Confirm" \
             --preview="echo -e '${BOLD}${CYAN}Package Information:${RESET}\n'; apt show {} 2>/dev/null" \
             --preview-window="top" \
@@ -40,33 +40,38 @@ main() {
     
     # If packages were selected
     if [[ -n "$package" ]]; then
-        echo "selected package: $package"
+        echo "Selected package(s): $package"
         echo
         
-        # Confirmation with timeout
-        read -t 30 -n1 -p "Install this package? [Y/n/q]: " install
-        
-        case "${install}" in
-            "" | "y" | "Y")
-                
-                if apt install -y $package; then
+        while true; do
+            read -t 30 -n1 -p "Install this package(s) [Y/n/q]: " -r install
+            
+            case "${install}" in
+                "" | "y" | "Y")
                     echo
-                    echo "${BOLD}${GREEN}Installation complete!${RESET}"
-                else
+                    if apt install -y "$package"; then
+                        echo
+                        echo "${BOLD}${GREEN}Installation complete!${RESET}"
+                    else
+                        echo "${BOLD}${RED}Installation failure!${RESET}"
+                    fi
+                    break
+                    ;;
+                "n" | "N")
                     echo
-                    echo "${BOLD}${RED}Installation failure!${RESET}"
-                fi
-                ;;
-            "q")
-                echo
-                echo "${BOLD}${CYAN}Exiting...${RESET}"
-                cleanup
-                ;;
-            *)
-                echo
-                echo "${BOLD}${RED}Installation canceled.${RESET}"
-                ;;
-        esac
+                    # Back to package selection 
+                    main
+                    break
+                    ;;
+                "q" | "Q")
+                    echo "${BOLD}${CYAN}Exiting...${RESET}"
+                    cleanup
+                    ;;
+                *)
+                    echo "${BOLD}${RED}Invalid choice. Press Y(es), n(o), or q(uit)${RESET}"
+                    ;;
+            esac
+        done
     else
         echo "${BOLD}${CYAN}No Package Selected${RESET}"
     fi
