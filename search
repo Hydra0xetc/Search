@@ -20,6 +20,7 @@ main() {
     package="$(
         apt-cache pkgnames 2>/dev/null | \
             fzf -m \
+            --style="full" \
             --prompt="${BOLD}${GREEN}Select A Package(s): ${RESET}" \
             --header="↑↓: Navigation | Tab: Select multiple package | Enter: Confirm" \
             --preview="echo -e '${BOLD}${CYAN}Package Information:${RESET}\n'; apt show {} 2>/dev/null" \

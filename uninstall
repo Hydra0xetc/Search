@@ -19,6 +19,7 @@ main() {
     
     package="$(dpkg-query -W -f='${Package}\n' |
             fzf -m \
+            --style="full" \
             --prompt="${BOLD}${GREEN}Select A Package: ${RESET}" \
             --header="↑↓: Navigation | Tab: Select multiple package | Enter: Confirm" \
             --preview="echo -e '${BOLD}${CYAN}Package Information:${RESET}\n'; apt show {} 2>/dev/null" \
